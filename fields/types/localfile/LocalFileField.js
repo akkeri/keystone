@@ -37,9 +37,9 @@ module.exports = Field.create({
 		this.fileFieldNode().value = '';
 		this.setState({
 			removeExisting: false,
-			localSource:    null,
-			origin:         false,
-			action:         null
+			localSource:	null,
+			origin:		 false,
+			action:		 null
 		});
 	},
 
@@ -102,11 +102,22 @@ module.exports = Field.create({
 		var values = null;
 
 		if (this.hasFile() && !this.state.removeExisting) {
+			/* AKKERI change starts */
+			var filename = this.getFilename();
 			values = (
 				<div className="file-values">
-					<FormInput noedit>{this.getFilename()}</FormInput>
+					<FormInput noedit>{filename}</FormInput>
 				</div>
 			);
+			if (filename.match(/\.(?:jpg|jpeg|png|gif)$/)) {
+				var thumb = '/tn/crop/' + filename + '?h=1&width=100&height=100';
+				add = (
+				  <div className="file-preview">
+					<img src={thumb} alt="" />
+				  </div>
+				);
+			}
+			/* AKKERI change ends */
 		}
 
 		return (
